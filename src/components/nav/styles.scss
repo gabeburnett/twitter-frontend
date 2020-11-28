@@ -1,0 +1,108 @@
+.nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 11px -2px rgba(0, 0, 0, 0.07);
+    padding: 7px 0px;
+    z-index: 0;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1024px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    &__site-icon {
+        font-size: 30px;
+        vertical-align: top;
+
+        svg {
+            fill: #39FF14;
+            vertical-align: bottom;
+            margin-bottom: 4px;
+        }
+    }
+
+    .search-bar {
+        display: inline-block;
+        position: relative;
+        max-width: 492px;// was 320px
+        width: 100%;
+        margin: 0 15px;
+
+        &__input {
+            width: 100%;
+        }
+    
+        &__icon-btn {
+            border: none;
+            background: transparent;
+            font-size: 26px;
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            cursor: pointer;
+            transition: all 0.15s;
+    
+            svg {
+                fill: rgba(67, 82, 92, 0.25);
+            }
+    
+            &:hover {
+                filter: drop-shadow(0 0px 1px #343a40);
+            }
+        }
+    }
+
+    .profile {
+        position: relative;
+        
+        img {
+            border-radius: 26px;
+            vertical-align: top;
+            cursor: pointer;
+        }
+
+        &__dropdown {
+            position: absolute;
+            right: 0;
+            top: 45px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            width: 175px;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+
+            a {
+                display: block;
+                text-decoration: none;
+                padding: 7.5px 15px 7.5px 15px;
+                
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.03);
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .nav {
+        &__wrapper {
+            padding: 0 7px;
+        }
+    }
+}
+
+@media only screen and (min-width: 620px) {
+    .nav {
+        .search-bar {
+            margin-right: 8px;
+        }
+    }
+}

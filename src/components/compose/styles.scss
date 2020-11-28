@@ -1,0 +1,32 @@
+.compose {
+    position: relative;
+
+    textarea {
+        width: 100%;
+        resize: vertical;
+        height: 57px;
+
+        &::-webkit-resizer {
+            display: none;
+        }
+    }
+
+    &__icon-btn {
+        border: none;
+        background: transparent;
+        font-size: 26px;
+        position: absolute;
+        bottom: 8px;
+        right: 16px;
+        cursor: pointer;
+        transition: all 0.15s;
+
+        svg {
+            fill: rgba(67, 82, 92, 0.25);
+        }
+
+        &:hover {
+            filter: drop-shadow(0 0px 1px #343a40);
+        }
+    }
+}

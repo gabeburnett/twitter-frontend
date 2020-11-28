@@ -1,0 +1,34 @@
+.tab {
+    margin: 0 auto;
+    width: fit-content;
+
+    &__btn {
+        border: none;
+        background-color: #acb3b7;
+        font-size: 18px;
+        font-weight: 500;
+        margin: 0 15px;
+        padding: 0px 0;
+        color: transparent;
+        margin-bottom: -2px;
+        cursor: pointer;
+        text-shadow: 2px 2px 8px rgb(255, 255, 255);
+        -webkit-background-clip: text;
+        -moz-background-clip: text;
+        background-clip: text;
+        padding-top: 0px;
+
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &-active {
+            color: #39ff14;
+            text-shadow: 0 0 2px #39ff14;
+        }
+    }
+}
