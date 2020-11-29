@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.scss';
 
-import Nav from './components/nav/Nav';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+
 import Home from './pages/home/Home';
 import ViewPost from './pages/view-post/ViewPost';
 import Profile from './pages/profile/Profile';
@@ -13,8 +16,10 @@ import Search from './pages/search/Search';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Nav/>
       <Switch>
+        <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
+        <Route path="/forgot-password" component={ForgotPassword}/>
         <Route path="/search" component={Search}/>
         <Route path="/settings" component={Settings}/>
         <Route path="/:username/post/:postID" children={<ViewPost/>}/>

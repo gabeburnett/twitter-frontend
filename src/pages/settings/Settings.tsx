@@ -1,7 +1,11 @@
 import React from 'react';
+import Nav from '../../components/nav/Nav';
 
 const Settings = () => (
-    <div>settings wooohoo</div>
+    <React.Fragment>
+        <Nav/>
+        <div>settings wooohoo</div>
+    </React.Fragment>
 );
 
 export default Settings;
