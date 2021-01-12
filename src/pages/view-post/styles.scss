@@ -1,23 +1,43 @@
 .view-post {
-    max-width: 1024px;
-    padding-top: 15px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
 
     &__timeline {
         max-width: 510px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .more {
+            margin-top: 15px;
+            align-self: center;
+        }
     }
     
     &__reply {
         display: flex;
         margin-top: 15px;
-
-        &:first-child {
-
-            // Connecting line to original post from the first reply
+        
+        &:not(:last-child) {
             .view-post__reply__line::before {
+                content: "";
+                display: block;
+                border-left: 2px solid #acb3b7;
+                width: 50%;
+                position: absolute;
+                height: calc(100% + 15px);
+                left: 30.5px;
+                top: -15px;
+            }
+
+            .view-post__reply__line::after {
+                border-radius: 0px;
+            }
+        }
+
+        &__line {
+            position: relative;
+            flex: 0 0 65px;
+
+            &::before {
                 content: "";
                 display: block;
                 border-left: 2px solid #acb3b7;
@@ -27,17 +47,6 @@
                 left: 30.5px;
                 top: -15px;
             }
-        }
-
-        &:not(:first-child) {
-
-            // Extend line to post above
-            //TODO
-        }
-
-        &__line {
-            position: relative;
-            flex: 0 0 65px;
 
             // Right angle
             &::after {

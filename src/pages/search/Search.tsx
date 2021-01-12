@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import Nav from '../../components/nav/Nav';
+import Timeline, { TimelineType } from '../../components/timeline/Timeline';
 import './styles.scss';
 
-import Nav from '../../components/nav/Nav';
-import Timeline from '../../components/timeline/Timeline';
-import Tab from '../../components/tab/Tab';
-
+/**
+ * Represents the search results page.
+ */
 const Search = () => {
-    const tabs = ["Popular", "Latest", "Media"];
-    const defaultTab = "Popular";
-    const [currentTab, setCurrentTab] = useState(defaultTab);
+    const query = new URLSearchParams(useLocation().search);
 
-    const getTabElements = () => {
-        switch (currentTab) {
-            case "Popular":
-                return <Timeline/>
-            default:
-                return <div>not implemented yet</div>
-        }
-    }
     return (
         <React.Fragment>
             <Nav/>
             <div className="setup-page">
                 <div className="search-value">
-                    <div>nadeshot</div>
+                    <div>{query.get("keywords")!}</div>
                 </div>
                 <div className="setup-page__centre">
-                    <Tab tabs={tabs} currentTab={currentTab} setCurrentTab={setCurrentTab}/>
-                    {getTabElements()}
+                    <Timeline type={TimelineType.Search} keywords={query.get("keywords")!}/>
                 </div>
             </div>
         </React.Fragment>

@@ -1,29 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './index.scss';
+import Cookies from 'js-cookie';
 
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import ForgotPassword from './pages/auth/ForgotPassword';
 
 import Home from './pages/home/Home';
 import ViewPost from './pages/view-post/ViewPost';
 import Profile from './pages/profile/Profile';
-import Settings from './pages/settings/Settings';
 import Search from './pages/search/Search';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-        <Route path="/login" component={Login}/>
-        <Route path="/register" component={Register}/>
-        <Route path="/forgot-password" component={ForgotPassword}/>
-        <Route path="/search" component={Search}/>
-        <Route path="/settings" component={Settings}/>
-        <Route path="/:username/post/:postID" children={<ViewPost/>}/>
-        <Route path="/:username" children={<Profile/>}/>
+        <Route exact path="/login" component={Login}/>
+        <Route exact path="/register" component={Register}/>
+        {Cookies.get("jwtToken") === null &&
+          <Route path="/*">
+            <Redirect to="/login"/>
+          </Route>
+        }
+        <Route exact path="/search" component={Search}/>
+        <Route exact path="/:username/post/:pid" children={<ViewPost/>}/>
+        <Route exact path="/:username" children={<Profile/>}/>
         <Route exact path="/" component={Home}/>
       </Switch>
     </BrowserRouter>

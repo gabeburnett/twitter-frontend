@@ -6,7 +6,12 @@
     background-color: white;
     box-shadow: 0px 0px 11px -2px rgba(0, 0, 0, 0.07);
     padding: 9px 0px;
-    z-index: 0;
+    z-index: 100;
+
+    &-spacer {
+        width: 100%;
+        height: 52px;
+    }
 
     &__wrapper {
         display: flex;
@@ -61,10 +66,17 @@
     .profile {
         position: relative;
         
-        img {
+        &__img {
             border-radius: 26px;
-            vertical-align: top;
-            cursor: pointer;
+            background-color: #ececec;
+            width: 38px;
+            height: 38px;
+
+            img {
+                border-radius: 26px;
+                vertical-align: top;
+                cursor: pointer;
+            }
         }
 
         &__dropdown {

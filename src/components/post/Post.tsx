@@ -1,40 +1,80 @@
-import React from 'react';
-import './styles.scss';
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { MdFavorite, MdChatBubble, MdRepeat } from 'react-icons/md';
 import { RiShareBoxLine } from 'react-icons/ri';
-import Dialog from '../dialog/Dialog';
+import ReplyDialog from './ReplyDialog';
+import { IPost } from '../../utils';
+import './styles.scss';
 
-interface PostData {
-    profileURL: string,
-    username: string,
-    date: string,
-    message: string,
-    repost: string
-}
+/**
+ * Represents the post component, which also handles the like and reposting buttons.
+ */
+const Post = (props: { data: IPost}) => {
+    const [likes, setLikes] = useState(Number(props.data.likes));
+    const [reposts, setReposts] = useState(Number(props.data.reposts));
+    const [hasLiked, setHasLiked] = useState(props.data.hasLiked);
+    const [hasReposted, setHasReposted] = useState(props.data.hasReposted);
+    const [hasReplyWindow, setReplyWindow] = useState(false);
+    
+    const onLikeClick = () => {
+        fetch("http://localhost:3000/api/post/" + (hasLiked ? "unlike" : "like") + "?" + new URLSearchParams({ pid: String(props.data.pid), uid: String(props.data.uid) }), {
+            method: "GET",  
+            credentials: "include",
+            headers: {
+                "Accept": "*",
+                "Authorization": "Bearer " + Cookies.get("jwtToken"),
+                "Content-Type": "application/json; charset=utf-8" },
+        });
+        setLikes(likes + (hasLiked ? -1 : 1));
+        setHasLiked(!hasLiked);
+    }
 
-// disable scroll example: https://github.com/gabeburnett/portfolio/blob/main/src/components/header/index.tsx
-const Post = (props: PostData) => {
+    const onRepostClick = () => {
+        fetch("http://localhost:3000/api/post/" + (hasReposted ? "unrepost" : "repost") + "?" + new URLSearchParams({ pid: String(props.data.pid), uid: String(props.data.uid) }), {
+            method: "GET",  
+            credentials: "include",
+            headers: {
+                "Accept": "*",
+                "Authorization": "Bearer " + Cookies.get("jwtToken"),
+                "Content-Type": "application/json; charset=utf-8" },
+        });
+        setReposts(likes + (hasReposted ? -1 : 1));
+        setHasReposted(!hasReposted);
+    }
+
     return (
         <React.Fragment>
-            {props.repost === "true" &&
-                <div className="post-subtext"><MdRepeat/><span>John Reposted</span></div>
+            {props.data.isRepost &&
+                <div className="post-subtext"><MdRepeat/><span>{props.data.repostUsername} Reposted</span></div>
             }
             <div className="post">
-                <img className="post__profile" src={props.profileURL} alt={props.username + " profile"} width="50" height="50"/>
+                <Link to={"/" + props.data.username }>
+                    <img className="post__profile" src={props.data.profileURL} alt={props.data.username + " profile"} width="50" height="50"/>
+                </Link>
                 <div className="post__header">
-                    <div className="post__header__username">{props.username}</div>
-                    <div className="post__header__date">{props.date}</div>
+                    <Link to={"/" + props.data.username }>
+                        <div className="header__username">{props.data.username}</div>
+                    </Link>
+                    <Link to={"/" + props.data.username + "/post/" + props.data.pid}>
+                        <div className="header__date">{props.data.date}</div>
+                    </Link>
                 </div>
-                <div className="post__message">{props.message}</div>
+                <div className="post__message">{props.data.message}</div>
                 <div className="post__interact">
-                    <button className="post__interact__btn post__interact__btn-favorite"><MdFavorite/><span>408</span></button>
-                    <button className="post__interact__btn post__interact__btn-repost"><MdRepeat/><span>185</span></button>
-                    <button className="post__interact__btn post__interact__btn-comment"><MdChatBubble/><span>14</span></button>
-                    <button className="post__interact__btn post__interact__btn-share"><RiShareBoxLine/></button>
+                    <button className={"interact-btn" + (hasLiked ? " interact-btn-active" : "")} onClick={() => onLikeClick()}>
+                        <MdFavorite/><span>{likes}</span>
+                    </button>
+                    <button className={"interact-btn" + (hasReposted ? " interact-btn-active" : "")} onClick={() => onRepostClick()}>
+                        <MdRepeat/><span>{reposts}</span>
+                    </button>
+                    <button className="interact-btn" onClick={() => setReplyWindow(true)}><MdChatBubble/><span>{props.data.comments}</span></button>
+                    <button className="interact-btn"><RiShareBoxLine/></button>
                 </div>
             </div>
-            {/* <Dialog title="Reply"/> */}
+            {hasReplyWindow &&
+                <ReplyDialog op={props.data} onExit={setReplyWindow}/>
+            }
         </React.Fragment>
     );
 }
