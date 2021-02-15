@@ -3,8 +3,7 @@ import './styles.scss';
 import Nav from '../../components/nav/Nav';
 import Post from '../../components/post/Post';
 import { useParams } from 'react-router-dom'; 
-import { IPost } from '../../utils';
-import Cookies from 'js-cookie';
+import { getJSON, IPost } from '../../utils';
 
 /**
  * Represents the viewing of a post and its comments.
@@ -20,14 +19,7 @@ const ViewPost = () => {
      */
     const loadComments = () => {
         setShowMore(false);
-        fetch("http://localhost:3000/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }), {
-            method: "GET",  
-            credentials: "include",
-            headers: {
-                "Accept": "*",
-                "Authorization": "Bearer " + Cookies.get("jwtToken"),
-                "Content-Type": "application/json; charset=utf-8" },
-        })
+        getJSON("/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }))
         .then((res) => res.json())
         .then((res: { op?: IPost, comments: IPost[] }) => {
             const newComments = [...comments];

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
 
 /**
  * Represents a post, with all the required data.
@@ -53,3 +54,16 @@ const useComponentVisible = (initialIsVisible: boolean) => {
 }
 
 export { useComponentVisible };
+
+const getJSON = (path: string) => (
+    fetch(process.env.REACT_APP_API_HOST + path, {
+        method: "GET",  
+        credentials: "include",
+        headers: {
+            "Accept": "*",
+            "Authorization": "Bearer " + Cookies.get("jwtToken"),
+            "Content-Type": "application/json; charset=utf-8" },
+    })
+);
+
+export { getJSON };

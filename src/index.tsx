@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './index.scss';
 import Cookies from 'js-cookie';
-
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 

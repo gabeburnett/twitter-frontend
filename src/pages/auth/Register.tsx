@@ -24,7 +24,7 @@ const Register = () => {
         } else if (password !== confirmPassword) {
             setError("Passwords don't match.");
         } else {
-            fetch("http://localhost:3000/api/auth/register", {
+            fetch(process.env.REACT_APP_API_HOST + "/api/auth/register", {
                 method: "POST",
                 credentials: "include",
                 headers: {

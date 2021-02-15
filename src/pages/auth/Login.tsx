@@ -20,7 +20,7 @@ const Login = () => {
         if (email.length < 3 || password.length === 0) {
             setError("Fill out all fields.");
         } else {
-            fetch("http://localhost:3000/api/auth/login", {
+            fetch(process.env.REACT_APP_API_HOST + "/api/auth/login", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -37,13 +37,14 @@ const Login = () => {
             })
             .catch((err) => {
                 console.log(err);
+                alert(err);
                 setError("Unable to connect.");
             });
         }
     }
 
     const logout = () => {
-        fetch("http://localhost:3000/api/auth/logout", {
+        fetch(process.env.REACT_APP_API_HOST + "/api/auth/logout", {
             method: "GET",
             credentials: "include",
             headers: {

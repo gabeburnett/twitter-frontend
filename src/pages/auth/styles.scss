@@ -14,8 +14,11 @@
         max-width: 400px;
         width: 100%;
         text-align: center;
-        display: flex;
+        display: grid;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
         flex-direction: column;
+        grid-gap: 15px;
         gap: 15px;
 
         input {
@@ -62,10 +65,14 @@
         }
 
         .auth-btns {
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-
+            // display: flex;
+            // flex-direction: row;
+            // gap: 15px;
+            display: grid;
+            grid-gap: 15px;
+            grid-template-columns: repeat( auto-fit, minmax(1px, 1fr) );
+            grid-auto-flow: column;
+            
             * {
                 width: 100%;   
             }

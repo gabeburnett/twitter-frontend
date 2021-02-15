@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import './styles.scss';
 import Cookies from 'js-cookie';
 import { MdPhoto } from 'react-icons/md';
-import { IProfile } from '../../utils';
+import { getJSON, IProfile } from '../../utils';
 import Nav from '../../components/nav/Nav';
 import Timeline, { TimelineType } from '../../components/timeline/Timeline';
 import Tab from '../../components/tab/Tab';
@@ -12,7 +12,7 @@ import Tab from '../../components/tab/Tab';
  * Represents a user's profile. Also handles following and editing of profiles.
  */
 const Profile = () => {
-    const tabs = ["Posts", "Likes", "Media"];
+    const tabs = ["Posts", "Likes"];
     const defaultTab = "Posts";
     const { username } = useParams<{ username: string }>();
     const [currentTab, setCurrentTab] = useState(defaultTab);
@@ -49,14 +49,7 @@ const Profile = () => {
         if (profile.username === Cookies.get("username")) {
             return;
         } else {
-            fetch("http://localhost:3000/api/profile/" + (following ? "unfollow" : "follow") + "?" + new URLSearchParams({ username }), {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Accept": "*",
-                    "Authorization": "Bearer " + Cookies.get("jwtToken"),
-                    "Content-Type": "application/json; charset=utf-8" },
-            });
+            getJSON("/api/profile/" + (following ? "unfollow" : "follow") + "?" + new URLSearchParams({ username }));
         }
         setFollowing(!following);
     }
@@ -65,14 +58,7 @@ const Profile = () => {
      * Fetch core profile data on component startup.
      */
     useEffect(() => {
-        fetch("http://localhost:3000/api/profile?" + new URLSearchParams({ username }), {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Accept": "*",
-                "Authorization": "Bearer " + Cookies.get("jwtToken"),
-                "Content-Type": "application/json; charset=utf-8" },
-        })
+        getJSON("/api/profile?" + new URLSearchParams({ username }))
         .then((res) => res.json())
         .then((res: IProfile) => {
             setProfile(res);
@@ -95,7 +81,7 @@ const Profile = () => {
         if (editProfile) formData.append("profile", editProfile[0]);
         if (editBackground) formData.append("background", editBackground[0]);
         if (!formData.values().next().done) {
-            fetch('http://localhost:3000/api/profile/update', {
+            fetch(process.env.REACT_APP_API_HOST + "/api/profile/update", {
                 method: "POST",
                 credentials: "include",
                 headers: {

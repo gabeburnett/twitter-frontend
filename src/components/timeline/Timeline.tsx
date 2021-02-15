@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './styles.scss';
-import Cookies from 'js-cookie';
 import { IPost } from '../../utils';
 import Post from '../post/Post';
+import { getJSON } from '../../utils';
 
 /**
  * Types of timelines.
@@ -27,30 +27,23 @@ export default (props: { type: TimelineType, username?: string, keywords?: strin
      */
     const loadPosts = () => {
         setShowMore(false);
-        let url = null;
+        let path = null;
         switch (props.type) {
             case TimelineType.Profile:
-                url = "http://localhost:3000/api/profile/posts?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
+                path = "/api/profile/posts?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
                 break;
             case TimelineType.ProfileLikes:
-                url = "http://localhost:3000/api/profile/likes?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
+                path = "/api/profile/likes?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
                 break;
             case TimelineType.Home:
-                url = "http://localhost:3000/api/timeline?" + new URLSearchParams({ lastDate: getLastDate()});
+                path = "/api/timeline?" + new URLSearchParams({ lastDate: getLastDate()});
                 break;
             case TimelineType.Search:
-                url = "http://localhost:3000/api/search?" + new URLSearchParams({ keywords: props.keywords!, lastDate: getLastDate()});
+                path = "/api/search?" + new URLSearchParams({ keywords: props.keywords!, lastDate: getLastDate()});
                 break;
         }
-        if (url) {
-            fetch(url, {
-                method: "GET",  
-                credentials: "include",
-                headers: {
-                    "Accept": "*",
-                    "Authorization": "Bearer " + Cookies.get("jwtToken"),
-                    "Content-Type": "application/json; charset=utf-8" },
-            })
+        if (path) {
+            getJSON(path)
             .then((res) => res.json())
             .then((res: IPost[]) => {
                 let newPosts = [...posts];
