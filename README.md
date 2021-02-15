@@ -17,7 +17,7 @@ A minimalist approach with the aim of serving the most common screen sizes.
 
 ## Setup
 
-Once you have cloned the repo, create a `.env` file in the twitter-frontent directory config the line written below.
+Once you have cloned the repo, create a `.env` file in the twitter-frontend directory and configure the line written below.
 
 Don't forget to change this to your local backend server when doing development.
 ```
