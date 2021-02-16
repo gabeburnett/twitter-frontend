@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useComponentVisible } from '../../utils';
 import './styles.scss';
 import Cookies from 'js-cookie';
+import { getJSON } from '../../utils';
 
 /**
  * Represents the profile button and dropdown.
@@ -10,6 +11,7 @@ import Cookies from 'js-cookie';
  */
 const Profile = () => {
     const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false);
+    const [profileIMG, setProfileIMG] = useState("");
 
     /**
      * Removes cookies on logout.
@@ -22,9 +24,21 @@ const Profile = () => {
         Cookies.remove("username");
     }
 
+    useEffect(() => {
+        getJSON("/api/profile/small")
+            .then((res) => res.json())
+            .then((res: { smallProfileURL: string }) => {
+                setProfileIMG(res.smallProfileURL);
+            });
+    }, [])
+
     return (
         <span className="profile" ref={ref} onClick={() => setIsComponentVisible(!isComponentVisible)}>
-            <div className="profile__img"><img src="https://picsum.photos/50/50" alt="profile" width="38" height="38"/></div>
+            <div className="profile__img">
+                {profileIMG &&
+                    <img src={profileIMG} alt="profile" width="38" height="38"/>
+                }
+            </div>
             {isComponentVisible &&
                 <div className="profile__dropdown">
                     <Link to={"/" + Cookies.get("username")}>View Profile</Link>

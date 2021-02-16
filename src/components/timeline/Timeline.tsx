@@ -59,7 +59,7 @@ export default (props: { type: TimelineType, username?: string, keywords?: strin
                 } else if (posts.length === 0) {
                     setStatusMsg("We couldn't find any posts.");
                 }
-            })
+            });
         }
     }
 

@@ -4,17 +4,15 @@
 
     &__btn {
         border: none;
-        background-color: #acb3b7;
         font-size: 18px;
         font-weight: 500;
         margin: 0 15px;
         padding: 0px 0;
-        color: transparent;
+        color: rgba(172,179,183, 0.48);
         margin-bottom: -2px;
         cursor: pointer;
-        text-shadow: 2px 2px 8px rgb(255, 255, 255);
-        -webkit-background-clip: text;
         -moz-background-clip: text;
+        -webkit-background-clip: text;
         background-clip: text;
         padding-top: 0px;
 
