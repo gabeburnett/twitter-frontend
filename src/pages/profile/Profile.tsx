@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import './styles.scss';
 import Cookies from 'js-cookie';
 import { MdPhoto } from 'react-icons/md';
@@ -14,6 +14,7 @@ import Tab from '../../components/tab/Tab';
 const Profile = () => {
     const tabs = ["Posts", "Likes"];
     const defaultTab = "Posts";
+    const history = useHistory();
     const { username } = useParams<{ username: string }>();
     const [currentTab, setCurrentTab] = useState(defaultTab);
 
@@ -59,8 +60,15 @@ const Profile = () => {
      */
     useEffect(() => {
         getJSON("/api/profile?" + new URLSearchParams({ username }))
-        .then((res) => res.json())
-        .then((res: IProfile) => {
+        .then((res) => {
+            if (res.status === 404) {
+                history.replace("/not-found");
+            }
+            return res.json();
+        })
+        .then((res) => {
+            if (!res || res.error) return;
+            
             setProfile(res);
             setFollowing(res.isFollowing);
             setOwnProfile(res.username === Cookies.get("username"));

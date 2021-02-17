@@ -26,7 +26,12 @@ const Profile = () => {
 
     useEffect(() => {
         getJSON("/api/profile/small")
-            .then((res) => res.json())
+            .then((res) => {
+                if (res.status === 401) {
+                    window.location.href = "/login";
+                }
+                return res.json();
+            })
             .then((res: { smallProfileURL: string }) => {
                 setProfileIMG(res.smallProfileURL);
             });

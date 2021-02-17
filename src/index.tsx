@@ -10,6 +10,7 @@ import Home from './pages/home/Home';
 import ViewPost from './pages/view-post/ViewPost';
 import Profile from './pages/profile/Profile';
 import Search from './pages/search/Search';
+import NotFound from './pages/not-found/NotFound';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
           </Route>
         }
         <Route exact path="/search" component={Search}/>
+        <Route exact path="/not-found" component={NotFound}/>
         <Route exact path="/:username/post/:pid" children={<ViewPost/>}/>
         <Route exact path="/:username" children={<Profile/>}/>
         <Route exact path="/" component={Home}/>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import Nav from '../../components/nav/Nav';
 import Post from '../../components/post/Post';
-import { useParams } from 'react-router-dom'; 
+import { useHistory, useParams } from 'react-router-dom'; 
 import { getJSON, IPost } from '../../utils';
 
 /**
@@ -13,6 +13,7 @@ const ViewPost = () => {
     const [opPost, setOPPost] = useState(null as IPost | null);
     const [comments, setComments] = useState([] as IPost[]);
     const [showMore, setShowMore] = useState(false);
+    const history = useHistory();
 
     /**
      * Makes a request for comments and the main post being viewed.
@@ -20,8 +21,16 @@ const ViewPost = () => {
     const loadComments = () => {
         setShowMore(false);
         getJSON("/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }))
-        .then((res) => res.json())
-        .then((res: { op?: IPost, comments: IPost[] }) => {
+        .then((res) => {
+            if (res.status === 404) {
+                history.replace("/not-found");
+            }
+            console.log(res);
+            return res.json();
+        })
+        .then((res: { op?: IPost, comments: IPost[], error?: string }) => {
+            if (!res || res.error) return;
+            
             const newComments = [...comments];
             if (hasDuplicatePost(comments, res.comments)) {
                 newComments.pop();

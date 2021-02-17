@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import './styles.scss';
 import { IPost } from '../../utils';
 import Post from '../post/Post';
@@ -17,10 +18,11 @@ export enum TimelineType {
 /**
  * Represents a post timeline. 
  */
-export default (props: { type: TimelineType, username?: string, keywords?: string }) => {
+const Timeline = (props: { type: TimelineType, username?: string, keywords?: string }) => {
     const [posts, setPosts] = useState([] as IPost[]);
     const [statusMsg, setStatusMsg] = useState("");
     const [showMore, setShowMore] = useState(false);
+    const history = useHistory();
 
     /**
      * Makes a request for more posts, manages the load more button and status messages.
@@ -44,8 +46,17 @@ export default (props: { type: TimelineType, username?: string, keywords?: strin
         }
         if (path) {
             getJSON(path)
-            .then((res) => res.json())
-            .then((res: IPost[]) => {
+            .then((res) => {
+                if (res.status === 401) {
+                    window.location.href = "/login";
+                } else if (res.status === 404) {
+                    history.replace("/not-found");
+                }
+                return res.json();
+            })
+            .then((res) => {
+                if (!res || res.error) return;
+
                 let newPosts = [...posts];
                 if (hasDuplicatePost(posts, res)) {
                     newPosts.pop();
@@ -105,3 +116,5 @@ const hasDuplicatePost = (currentPosts: IPost[], newPosts: IPost[]) => {
     }
     return false;
 }
+
+export default Timeline;
