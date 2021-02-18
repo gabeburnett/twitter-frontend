@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { getJSON, IPost } from '../../utils';
 import './styles.scss';
 import { MdSend } from 'react-icons/md';
@@ -10,7 +9,6 @@ import { MdSend } from 'react-icons/md';
  */
 const Compose = (props: { op?: IPost }) => {
     const [message, setMessage] = useState("");
-    const history = useHistory();
 
     /**
      * Checks whether the new post is a comment 
@@ -22,6 +20,7 @@ const Compose = (props: { op?: IPost }) => {
         if (props.op) {
             submitComment();
         } else {
+            console.log("askldnaklsd");
             submit();
         }
     }
@@ -35,8 +34,7 @@ const Compose = (props: { op?: IPost }) => {
         getJSON("/api/post/create?" + new URLSearchParams({ message }))
         .then((res) => {
             if (res.status === 200) {
-                setMessage("");
-                history.push("/");
+                window.location.href = "/";
             }
         })
         .catch((err) => console.log(err));
@@ -49,7 +47,7 @@ const Compose = (props: { op?: IPost }) => {
         getJSON("/api/post/create/comment?" + new URLSearchParams({ pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message }))
         .then((res) => {
             if (res.status === 200) {
-                history.push("/" + props.op!.username + "/post/" + props.op!.pid);
+                window.location.href = "/" + props.op!.username + "/post/" + props.op!.pid;
             }
         })
         .catch((err) => console.log(err));
