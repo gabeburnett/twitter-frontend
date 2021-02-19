@@ -9,11 +9,11 @@ A minimalist approach with the aim of serving the most common screen sizes.
 
 ### Mobile
 
-![Image of Mobile UI](https://i.imgur.com/bdqccrW.png)
+![Image of Mobile UI](https://i.imgur.com/AR1m15h.png)
 
 ### Desktop
 
-![Image of Desktop UI](https://i.imgur.com/oBZvcx3.png)
+![Image of Desktop UI](https://i.imgur.com/mxIJA9J.png)
 
 ## Setup
 
