@@ -70,7 +70,6 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
                 } else if (res.length === 0) {
                     setStatusMsg("We couldn't find any posts.");
                 }
-                console.log(res);
             });
         }
     }
