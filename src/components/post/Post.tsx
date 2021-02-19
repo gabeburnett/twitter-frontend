@@ -24,13 +24,13 @@ const Post = (props: { data: IPost}) => {
 
     const onRepostClick = () => {
         getJSON("/api/post/" + (hasReposted ? "unrepost" : "repost") + "?" + new URLSearchParams({ pid: String(props.data.pid), uid: String(props.data.uid) }));
-        setReposts(likes + (hasReposted ? -1 : 1));
+        setReposts(reposts + (hasReposted ? -1 : 1));
         setHasReposted(!hasReposted);
     }
 
     return (
         <React.Fragment>
-            {props.data.isRepost &&
+            {props.data.repostUsername &&
                 <div className="post-subtext"><MdRepeat/><span>{props.data.repostUsername} Reposted</span></div>
             }
             <div className="post">

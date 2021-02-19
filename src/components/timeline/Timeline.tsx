@@ -67,9 +67,10 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
 
                 if (res.length === 10) {
                     setShowMore(true);
-                } else if (posts.length === 0) {
+                } else if (res.length === 0) {
                     setStatusMsg("We couldn't find any posts.");
                 }
+                console.log(res);
             });
         }
     }
@@ -94,7 +95,7 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
     return (
         <div className="timeline">
             {posts.map((post: IPost) => 
-                <Post key={post.pid + "-" + post.uid} data={post}/>
+                <Post key={post.pid + "-" + post.uid + "-" + post.repostUsername} data={post}/>
             )}
             {showMore && <button className="btn btn-thin more" onClick={() => loadPosts()}>Show more</button>}
             {statusMsg.length !== 0 && <div className="status-msg">{statusMsg}</div>}
