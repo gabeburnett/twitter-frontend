@@ -9,16 +9,16 @@ import './styles.scss';
  */
 const Search = () => {
     const query = new URLSearchParams(useLocation().search);
-
+    const keywords = query.get("keywords");
     return (
         <React.Fragment>
             <Nav/>
             <div className="setup-page">
                 <div className="search-value">
-                    <div>{query.get("keywords")!}</div>
+                    <div>{keywords!}</div>
                 </div>
                 <div className="setup-page__centre">
-                    <Timeline type={TimelineType.Search} keywords={query.get("keywords")!}/>
+                    <Timeline key={TimelineType.Search + keywords!} type={TimelineType.Search} keywords={keywords!}/>
                 </div>
             </div>
         </React.Fragment>

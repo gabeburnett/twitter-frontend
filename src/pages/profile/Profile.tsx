@@ -35,9 +35,9 @@ const Profile = () => {
     const getTabElements = () => {
         switch (currentTab) {
             case "Posts":
-                return <Timeline key={TimelineType.Profile} type={TimelineType.Profile} username={username}/>
+                return <Timeline key={TimelineType.Profile + username} type={TimelineType.Profile} username={username}/>
             case "Likes":
-                return <Timeline key={TimelineType.ProfileLikes} type={TimelineType.ProfileLikes} username={username}/>
+                return <Timeline key={TimelineType.ProfileLikes + username} type={TimelineType.ProfileLikes} username={username}/>
             default:
                 return <div>not implemented yet</div>
         }
@@ -70,7 +70,7 @@ const Profile = () => {
             if (!res || res.error) return;
             
             setProfile(res);
-            setFollowing(res.isFollowing);
+            setFollowing(res.following);
             setOwnProfile(res.username === Cookies.get("username"));
             if (res.username === Cookies.get("username")) {
                 setEditUsername(res.username);
@@ -139,7 +139,7 @@ const Profile = () => {
         if (editingMode) {
             return (
                 <React.Fragment>
-                    <input type="text" className="input-form input-form-thin card__username" placeholder="Username" value={editUsername} onChange={(e) => setEditUsername(e.target.value)}/>
+                    <input type="text" className="input-form input-form-thin card__username" disabled placeholder="Username" value={editUsername} onChange={(e) => setEditUsername(e.target.value)}/>
                     <textarea rows={2} className="input-form input-form-thin" placeholder="Description" value={editDesc} onChange={(e) => setEditDesc(e.target.value)}/>
                 </React.Fragment>
             );

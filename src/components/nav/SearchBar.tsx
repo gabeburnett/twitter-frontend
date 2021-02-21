@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { MdSearch } from 'react-icons/md';
 import './styles.scss';
 
@@ -9,13 +9,14 @@ import './styles.scss';
 const SearchBar = () => {
     const query = new URLSearchParams(useLocation().search);
     const [inputValue, setInputValue] = useState("");
+    const history = useHistory();
 
     /**
      * Handles search submission.
      */
     const onSearchSubmit = () => {
         if (inputValue.length === 0) return;
-        window.location.href = "/search?" + new URLSearchParams({ keywords: inputValue });
+        history.push("/search?" + new URLSearchParams({ keywords: inputValue }));
     }
 
     /** Set input value to the keywords in the query. */
@@ -23,6 +24,7 @@ const SearchBar = () => {
         if (query.get("keywords")) {
             setInputValue(query.get("keywords")!);
         }
+        // eslint-disable-next-line
     }, []);
 
     return (

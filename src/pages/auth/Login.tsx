@@ -43,23 +43,6 @@ const Login = () => {
         }
     }
 
-    const logout = () => {
-        fetch(process.env.REACT_APP_API_HOST + "/api/auth/logout", {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Accept": "*",
-                "Authorization": "Bearer " + Cookies.get("jwtToken"),
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        })
-        .then((res) => res.text())
-        .then((txt) => console.log(txt))
-        .catch((err) => {
-            console.log(err);
-        });
-    }
-
     return (
         <div className="auth-container">
             <div className="auth-panel">

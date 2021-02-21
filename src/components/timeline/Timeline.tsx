@@ -89,6 +89,7 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
      */
     useEffect(() => {
         loadPosts();
+        // eslint-disable-next-line
     }, []);
 
     return (

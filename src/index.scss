@@ -46,6 +46,10 @@ body {
     &-thin {
         padding: 3px 6px;
     }
+
+    &:disabled {
+        opacity: 0.45;
+    }
 }
 
 .btn {
