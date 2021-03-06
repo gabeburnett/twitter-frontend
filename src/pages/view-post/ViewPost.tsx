@@ -3,7 +3,7 @@ import './styles.scss';
 import Nav from '../../components/nav/Nav';
 import Post from '../../components/post/Post';
 import { useHistory, useParams } from 'react-router-dom'; 
-import { getJSON, IPost } from '../../utils';
+import { jsonRequest, IPost } from '../../utils';
 
 /**
  * Represents the viewing of a post and its comments.
@@ -20,7 +20,7 @@ const ViewPost = () => {
      */
     const loadComments = () => {
         setShowMore(false);
-        getJSON("/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }))
+        jsonRequest("GET", "/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }))
         .then((res) => {
             if (res.status === 404) {
                 history.replace("/not-found");

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './styles.scss';
 import { IPost } from '../../utils';
 import Post from '../post/Post';
-import { getJSON } from '../../utils';
+import { jsonRequest } from '../../utils';
 
 /**
  * Types of timelines.
@@ -45,7 +45,7 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
                 break;
         }
         if (path) {
-            getJSON(path)
+            jsonRequest("GET", path)
             .then((res) => {
                 if (res.status === 401) {
                     window.location.href = "/login";

@@ -55,15 +55,16 @@ const useComponentVisible = (initialIsVisible: boolean) => {
 
 export { useComponentVisible };
 
-const getJSON = (path: string) => (
+const jsonRequest = (method: string, path: string, body?: any) => (
     fetch(process.env.REACT_APP_API_HOST + path, {
-        method: "GET",  
+        method,  
         credentials: "include",
         headers: {
             "Accept": "*",
             "Authorization": "Bearer " + Cookies.get("jwtToken"),
             "Content-Type": "application/json; charset=utf-8" },
+        body: JSON.stringify(body)
     })
 );
 
-export { getJSON };
+export { jsonRequest };

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useComponentVisible } from '../../utils';
 import './styles.scss';
 import Cookies from 'js-cookie';
-import { getJSON } from '../../utils';
+import { jsonRequest } from '../../utils';
 
 /**
  * Represents the profile button and dropdown.
@@ -25,7 +25,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        getJSON("/api/profile/small")
+        jsonRequest("GET", "/api/profile/small")
             .then((res) => {
                 if (res.status === 401) {
                     window.location.href = "/login";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getJSON, IPost } from '../../utils';
+import { jsonRequest, IPost } from '../../utils';
 import './styles.scss';
 import { MdSend } from 'react-icons/md';
 
@@ -20,7 +20,6 @@ const Compose = (props: { op?: IPost }) => {
         if (props.op) {
             submitComment();
         } else {
-            console.log("askldnaklsd");
             submit();
         }
     }
@@ -29,9 +28,7 @@ const Compose = (props: { op?: IPost }) => {
      * Submits a new post.
      */
     const submit = () => {
-        if (message.length === 0) return;
-
-        getJSON("/api/post/create?" + new URLSearchParams({ message }))
+        jsonRequest("POST", "/api/post/create", { message })
         .then((res) => {
             if (res.status === 200) {
                 window.location.href = "/";
@@ -44,7 +41,7 @@ const Compose = (props: { op?: IPost }) => {
      * Submits a new comment.
      */
     const submitComment = () => {
-        getJSON("/api/post/create/comment?" + new URLSearchParams({ pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message }))
+        jsonRequest("POST", "/api/post/create/comment", { pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message })
         .then((res) => {
             if (res.status === 200) {
                 window.location.href = "/" + props.op!.username + "/post/" + props.op!.pid;

@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import './styles.scss';
 import Cookies from 'js-cookie';
 import { MdPhoto } from 'react-icons/md';
-import { getJSON, IProfile } from '../../utils';
+import { jsonRequest, IProfile } from '../../utils';
 import Nav from '../../components/nav/Nav';
 import Timeline, { TimelineType } from '../../components/timeline/Timeline';
 import Tab from '../../components/tab/Tab';
@@ -50,7 +50,7 @@ const Profile = () => {
         if (profile.username === Cookies.get("username")) {
             return;
         } else {
-            getJSON("/api/profile/" + (following ? "unfollow" : "follow") + "?" + new URLSearchParams({ username }));
+            jsonRequest(following ? "DELETE" : "POST", "/api/profile/follow?", { username });
         }
         setFollowing(!following);
     }
@@ -59,7 +59,7 @@ const Profile = () => {
      * Fetch core profile data on component startup.
      */
     useEffect(() => {
-        getJSON("/api/profile?" + new URLSearchParams({ username }))
+        jsonRequest("GET", "/api/profile?" + new URLSearchParams({ username }))
         .then((res) => {
             if (res.status === 404) {
                 history.replace("/not-found");

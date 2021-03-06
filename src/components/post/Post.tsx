@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdFavorite, MdChatBubble, MdRepeat } from 'react-icons/md';
 import { RiShareBoxLine } from 'react-icons/ri';
 import ReplyDialog from './ReplyDialog';
-import { getJSON, IPost } from '../../utils';
+import { jsonRequest, IPost } from '../../utils';
 import './styles.scss';
 
 /**
@@ -17,13 +17,13 @@ const Post = (props: { data: IPost}) => {
     const [hasReplyWindow, setReplyWindow] = useState(false);
     
     const onLikeClick = () => {
-        getJSON("/api/post/" + (hasLiked ? "unlike" : "like") + "?" + new URLSearchParams({ pid: String(props.data.pid), uid: String(props.data.uid) }));
+        jsonRequest(hasLiked ? "DELETE" : "POST", "/api/post/like", { pid: String(props.data.pid), uid: String(props.data.uid) });
         setLikes(likes + (hasLiked ? -1 : 1));
         setHasLiked(!hasLiked);
     }
 
     const onRepostClick = () => {
-        getJSON("/api/post/" + (hasReposted ? "unrepost" : "repost") + "?" + new URLSearchParams({ pid: String(props.data.pid), uid: String(props.data.uid) }));
+        jsonRequest(hasReposted ? "DELETE" : "POST", "/api/post/repost", { pid: String(props.data.pid), uid: String(props.data.uid) });
         setReposts(reposts + (hasReposted ? -1 : 1));
         setHasReposted(!hasReposted);
     }
