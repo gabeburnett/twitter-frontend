@@ -28,7 +28,7 @@ const Compose = (props: { op?: IPost }) => {
      * Submits a new post.
      */
     const submit = () => {
-        jsonRequest("POST", "/api/post/create", { message })
+        jsonRequest("POST", "/api/post", { message })
         .then((res) => {
             if (res.status === 200) {
                 window.location.href = "/";
@@ -41,7 +41,7 @@ const Compose = (props: { op?: IPost }) => {
      * Submits a new comment.
      */
     const submitComment = () => {
-        jsonRequest("POST", "/api/post/create/comment", { pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message })
+        jsonRequest("POST", "/api/post/comment", { pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message })
         .then((res) => {
             if (res.status === 200) {
                 window.location.href = "/" + props.op!.username + "/post/" + props.op!.pid;
