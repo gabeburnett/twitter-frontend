@@ -50,7 +50,7 @@ const Profile = () => {
         if (profile.username === Cookies.get("username")) {
             return;
         } else {
-            jsonRequest(following ? "DELETE" : "POST", "/api/profile/follow?", { username });
+            jsonRequest(following ? "DELETE" : "POST", "/api/user/" + username + "/follow");
         }
         setFollowing(!following);
     }
@@ -59,7 +59,7 @@ const Profile = () => {
      * Fetch core profile data on component startup.
      */
     useEffect(() => {
-        jsonRequest("GET", "/api/profile?" + new URLSearchParams({ username }))
+        jsonRequest("GET", "/api/user/" + username)
         .then((res) => {
             if (res.status === 404) {
                 history.replace("/not-found");
@@ -89,7 +89,7 @@ const Profile = () => {
         if (editProfile) formData.append("profile", editProfile[0]);
         if (editBackground) formData.append("background", editBackground[0]);
         if (!formData.values().next().done) {
-            fetch(process.env.REACT_APP_API_HOST + "/api/profile/update", {
+            fetch(process.env.REACT_APP_API_HOST + "/api/user/" + Cookies.get("username"), {
                 method: "POST",
                 credentials: "include",
                 headers: {

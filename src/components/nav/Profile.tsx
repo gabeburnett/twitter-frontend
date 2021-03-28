@@ -25,7 +25,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        jsonRequest("GET", "/api/profile/small")
+        jsonRequest("GET", "/api/user/" + Cookies.get("username") + "/small")
             .then((res) => {
                 if (res.status === 401) {
                     window.location.href = "/login";

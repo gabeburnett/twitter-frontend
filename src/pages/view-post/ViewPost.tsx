@@ -20,7 +20,7 @@ const ViewPost = () => {
      */
     const loadComments = () => {
         setShowMore(false);
-        jsonRequest("GET", "/api/post?" + new URLSearchParams({ username, pid, lastDate: getLastDate() }))
+        jsonRequest("GET", "/api/post/" + pid + "/" + username + "/?" + new URLSearchParams({ lastDate: getLastDate() }))
         .then((res) => {
             if (res.status === 404) {
                 history.replace("/not-found");

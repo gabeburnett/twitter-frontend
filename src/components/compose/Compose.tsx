@@ -41,7 +41,7 @@ const Compose = (props: { op?: IPost }) => {
      * Submits a new comment.
      */
     const submitComment = () => {
-        jsonRequest("POST", "/api/post/comment", { pid: props.op!.pid.toString(), uid: props.op!.uid.toString(), message })
+        jsonRequest("POST", "/api/post/" + props.op!.pid.toString() + "/" + props.op!.uid.toString() +  "/comment", { message })
         .then((res) => {
             if (res.status === 200) {
                 window.location.href = "/" + props.op!.username + "/post/" + props.op!.pid;

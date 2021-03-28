@@ -20,8 +20,10 @@ A minimalist approach with the aim of serving the most common screen sizes.
 Once you have cloned the repo, create a `.env` file in the twitter-frontend directory and configure the line written below.
 
 Don't forget to change this to your local backend server when doing development.
+
 ```
 REACT_APP_API_HOST=http://social.gabe.nz
+REACT_APP_DEMO_ACCOUNT_ENABLE=true
 ```
 
 <br/>

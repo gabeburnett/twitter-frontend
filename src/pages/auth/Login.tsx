@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './styles.scss';
 import { GiKiwiBird } from 'react-icons/gi';
 import { MdError } from 'react-icons/md';
-
-import Cookies from 'js-cookie';
 
 /**
  * Represents the login page, checks input fields and makes a login request.
@@ -14,6 +12,15 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+
+
+    useEffect(() => {
+        if (process.env.REACT_APP_DEMO_ACCOUNT_ENABLE) {
+            setEmail("demo@example.com");
+            setPassword("password");
+            setError("Login to our demo account!")
+        }
+    }, [])
     
     /** Makes a login request and processes the response. */
     const onLoginClick = () => {

@@ -17,13 +17,13 @@ const Post = (props: { data: IPost}) => {
     const [hasReplyWindow, setReplyWindow] = useState(false);
     
     const onLikeClick = () => {
-        jsonRequest(hasLiked ? "DELETE" : "POST", "/api/post/like", { pid: String(props.data.pid), uid: String(props.data.uid) });
+        jsonRequest(hasLiked ? "DELETE" : "POST", "/api/post/" + String(props.data.pid) + "/" + String(props.data.uid) + "/like");
         setLikes(likes + (hasLiked ? -1 : 1));
         setHasLiked(!hasLiked);
     }
 
     const onRepostClick = () => {
-        jsonRequest(hasReposted ? "DELETE" : "POST", "/api/post/repost", { pid: String(props.data.pid), uid: String(props.data.uid) });
+        jsonRequest(hasReposted ? "DELETE" : "POST", "/api/post/" + String(props.data.pid) + "/" + String(props.data.uid) + "/repost");
         setReposts(reposts + (hasReposted ? -1 : 1));
         setHasReposted(!hasReposted);
     }

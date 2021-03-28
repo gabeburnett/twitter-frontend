@@ -32,10 +32,10 @@ const Timeline = (props: { type: TimelineType, username?: string, keywords?: str
         let path = null;
         switch (props.type) {
             case TimelineType.Profile:
-                path = "/api/profile/posts?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
+                path = "/api/user/" + props.username! + "/posts?" + new URLSearchParams({ lastDate: getLastDate()});
                 break;
             case TimelineType.ProfileLikes:
-                path = "/api/profile/likes?" + new URLSearchParams({ username: props.username!, lastDate: getLastDate()});
+                path = "/api/user/" + props.username! + "/likes?" + new URLSearchParams({ lastDate: getLastDate()});
                 break;
             case TimelineType.Home:
                 path = "/api/timeline?" + new URLSearchParams({ lastDate: getLastDate()});
